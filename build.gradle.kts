@@ -1,7 +1,9 @@
-import Versions.zircon
+import Versions.clikt
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.70"
+    kotlin("plugin.serialization") version "1.3.70"
     application
 }
 
@@ -12,8 +14,7 @@ repositories {
 dependencies {
     implementation(platform(kotlin("bom")))
     implementation(kotlin("stdlib-jdk8"))
-    implementation("org.hexworks.zircon:zircon.core:$zircon")
-    implementation("org.hexworks.zircon:zircon.jvm.swing:$zircon")
+    implementation("com.github.ajalt:clikt:$clikt")
 
     testImplementation(kotlin("kotlin-test"))
     testImplementation(kotlin("test-junit"))
@@ -21,4 +22,10 @@ dependencies {
 
 application {
     mainClassName = "io.kantt.AppKt"
+}
+
+tasks.withType<KotlinCompile>() {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }

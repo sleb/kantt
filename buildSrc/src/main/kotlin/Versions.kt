@@ -1,3 +1,3 @@
 object Versions {
-    const val zircon = "2020.1.0-RELEASE"
+    const val clikt = "2.6.0"
 }
