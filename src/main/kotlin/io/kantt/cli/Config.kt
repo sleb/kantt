@@ -8,8 +8,8 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
 
 class Set : CliktCommand() {
-    private val projectFilePath by option().path()
     private val opts by requireObject<Options>()
+    private val projectFilePath by option().path()
 
     override fun run() {
         println("opts: $opts")

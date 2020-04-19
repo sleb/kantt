@@ -1,4 +1,4 @@
-package io.kantt.cli.resource
+package io.kantt.cli
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.NoOpCliktCommand

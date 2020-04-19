@@ -16,6 +16,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.github.ajalt:clikt:$clikt")
     implementation("com.squareup.moshi:moshi:$moshi")
+    implementation("com.squareup.moshi:moshi-kotlin:$moshi")
 
     testImplementation(kotlin("kotlin-test"))
     testImplementation(kotlin("test-junit"))
@@ -28,5 +29,8 @@ application {
 tasks.withType<KotlinCompile>() {
     kotlinOptions {
         jvmTarget = "11"
+        freeCompilerArgs = listOf(
+            "-Xopt-in=com.github.ajalt.clikt.sources.ExperimentalValueSourceApi"
+        )
     }
 }
