@@ -6,13 +6,18 @@ import com.github.ajalt.clikt.core.requireObject
 import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
+import java.nio.file.Files
+import java.util.Properties
 
 class Set : CliktCommand() {
-    private val opts by requireObject<Options>()
-    private val projectFilePath by option().path()
+    private val options by requireObject<Options>()
+    private val projectPath by option().path()
 
     override fun run() {
-        println("opts: $opts")
+        val kanttConfig = Properties()
+        kanttConfig.load(Files.newBufferedReader(options.configPath))
+        projectPath?.let { kanttConfig["project-path"] = it.toString() }
+        kanttConfig.store(Files.newBufferedWriter(options.configPath), "")
     }
 }
 
