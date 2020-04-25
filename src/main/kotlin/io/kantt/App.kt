@@ -1,13 +1,19 @@
 package io.kantt
 
-import com.github.ajalt.clikt.core.subcommands
-import io.kantt.cli.Config
 import io.kantt.cli.Kantt
-import io.kantt.cli.Resource
+import org.koin.core.KoinComponent
+import org.koin.core.context.startKoin
+import org.koin.core.inject
+
+class App : KoinComponent {
+    private val kantt by inject<Kantt>()
+
+    fun run(args: Array<String>) {
+        kantt.main(args)
+    }
+}
 
 fun main(args: Array<String>) {
-    Kantt().subcommands(
-        Resource(),
-        Config()
-    ).main(args)
+    startKoin { modules(appModule) }
+    App().run(args)
 }

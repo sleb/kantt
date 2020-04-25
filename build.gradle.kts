@@ -1,4 +1,5 @@
 import Versions.clikt
+import Versions.koin
 import Versions.moshi
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -17,6 +18,7 @@ dependencies {
     implementation("com.github.ajalt:clikt:$clikt")
     implementation("com.squareup.moshi:moshi:$moshi")
     implementation("com.squareup.moshi:moshi-kotlin:$moshi")
+    implementation("org.koin:koin-core:$koin")
 
     testImplementation(kotlin("kotlin-test"))
     testImplementation(kotlin("test-junit"))
