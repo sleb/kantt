@@ -10,7 +10,7 @@ import com.github.ajalt.clikt.parameters.types.path
 
 class ConfigSet(private val configSvc: ConfigService) : CliktCommand(name = "set") {
     private val options by requireObject<Options>()
-    private val projectPath by option().path()
+    private val projectPath by option().path(canBeDir = false)
 
     override fun run() {
         val configPath = options.configPath ?: throw PrintMessage("please specify a config path")
