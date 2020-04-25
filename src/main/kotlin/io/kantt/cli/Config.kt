@@ -2,6 +2,7 @@ package io.kantt.cli
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.NoOpCliktCommand
+import com.github.ajalt.clikt.core.PrintMessage
 import com.github.ajalt.clikt.core.requireObject
 import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.options.option
@@ -14,10 +15,16 @@ class Set : CliktCommand() {
     private val projectPath by option().path()
 
     override fun run() {
+        val configPath = options.configPath ?: throw PrintMessage("please specify a config path")
+
         val kanttConfig = Properties()
-        kanttConfig.load(Files.newBufferedReader(options.configPath))
+        if (Files.exists(configPath)) {
+            kanttConfig.load(Files.newBufferedReader(options.configPath))
+        } else {
+            Files.createDirectories(configPath.parent)
+        }
         projectPath?.let { kanttConfig["project-path"] = it.toString() }
-        kanttConfig.store(Files.newBufferedWriter(options.configPath), "")
+        kanttConfig.store(Files.newBufferedWriter(configPath), "")
     }
 }
 
