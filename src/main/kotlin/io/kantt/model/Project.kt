@@ -1,25 +1,30 @@
-package io.kantt.cli
+package io.kantt.model
 
 import com.github.ajalt.clikt.core.PrintMessage
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonClass
+import io.kantt.cli.Options
 import okio.Okio
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 
 @JsonClass(generateAdapter = true)
-data class Options(var configPath: Path? = null, var projectPath: Path? = null)
-
-interface OptionsService {
-    fun load(path: Path): Options
-    fun save(path: Path, options: Options)
+data class Project(var resources: Set<Resource> = setOf()) {
+    companion object {
+        fun empty() = Project(resources = setOf())
+    }
 }
 
-class DefaultOptionsService(private val jsonAdapter: JsonAdapter<Options>) : OptionsService {
-    override fun load(path: Path): Options =
+interface ProjectService {
+    fun load(path: Path): Project
+    fun save(path: Path, project: Project)
+}
+
+class DefaultProjectService(private val jsonAdapter: JsonAdapter<Project>) : ProjectService {
+    override fun load(path: Path): Project =
         if (Files.notExists(path)) {
-            Options().also { save(path, it) }
+            Project.empty().also { save(path, it) }
         } else {
             Okio.source(path).use {
                 jsonAdapter.fromJson(Okio.buffer(it)) ?: throw PrintMessage(
@@ -28,7 +33,7 @@ class DefaultOptionsService(private val jsonAdapter: JsonAdapter<Options>) : Opt
             }
         }
 
-    override fun save(path: Path, options: Options) =
+    override fun save(path: Path, project: Project) =
         Okio.buffer(
             Okio.sink(
                 path,
@@ -36,6 +41,7 @@ class DefaultOptionsService(private val jsonAdapter: JsonAdapter<Options>) : Opt
                 StandardOpenOption.TRUNCATE_EXISTING
             )
         ).use {
-            jsonAdapter.toJson(it, options)
+            jsonAdapter.toJson(it, project)
         }
 }
+

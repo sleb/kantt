@@ -4,7 +4,8 @@ import Versions.moshi
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm") version "1.3.72"
+    kotlin("kapt") version "1.3.72"
     application
 }
 
@@ -19,6 +20,8 @@ dependencies {
     implementation("com.squareup.moshi:moshi:$moshi")
     implementation("com.squareup.moshi:moshi-kotlin:$moshi")
     implementation("org.koin:koin-core:$koin")
+
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshi")
 
     testImplementation(kotlin("kotlin-test"))
     testImplementation(kotlin("test-junit"))
