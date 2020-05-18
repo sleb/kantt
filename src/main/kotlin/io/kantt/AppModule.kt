@@ -11,6 +11,7 @@ import io.kantt.cli.OptionsService
 import io.kantt.cli.Resource
 import io.kantt.cli.ResourceCreate
 import io.kantt.cli.ResourceList
+import io.kantt.json.PathAdapter
 import io.kantt.model.DefaultProjectService
 import io.kantt.model.Project
 import io.kantt.model.ProjectService
@@ -18,8 +19,8 @@ import org.koin.dsl.module
 
 val appModule = module {
     single { Moshi.Builder().add(PathAdapter()).build() }
-    single<ProjectService> { DefaultProjectService(get<Moshi>().adapter(Project::class.java)) }
-    single<OptionsService> { DefaultOptionsService(get<Moshi>().adapter(Options::class.java)) }
+    single<ProjectService> { DefaultProjectService(get<Moshi>().adapter(Project::class.java).indent("  ")) }
+    single<OptionsService> { DefaultOptionsService(get<Moshi>().adapter(Options::class.java).indent("  ")) }
     single { ConfigShow(get()) }
     single { ConfigSet(get()) }
     single { Config(get(), get()) }

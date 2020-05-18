@@ -1,4 +1,4 @@
-package io.kantt
+package io.kantt.json
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
