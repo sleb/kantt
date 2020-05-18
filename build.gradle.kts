@@ -1,11 +1,8 @@
-import Versions.clikt
-import Versions.koin
-import Versions.moshi
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.72"
-    kotlin("kapt") version "1.3.72"
+    kotlin("jvm") version Versions.kotlin
+    kotlin("kapt") version Versions.kotlin
     application
 }
 
@@ -16,12 +13,12 @@ repositories {
 dependencies {
     implementation(platform(kotlin("bom")))
     implementation(kotlin("stdlib-jdk8"))
-    implementation("com.github.ajalt:clikt:$clikt")
-    implementation("com.squareup.moshi:moshi:$moshi")
-    implementation("com.squareup.moshi:moshi-kotlin:$moshi")
-    implementation("org.koin:koin-core:$koin")
+    implementation("com.github.ajalt:clikt:${Versions.clikt}")
+    implementation("com.squareup.moshi:moshi:${Versions.moshi}")
+    //implementation("com.squareup.moshi:moshi-kotlin:${Versions.moshi}")
+    implementation("org.koin:koin-core:${Versions.koin}")
 
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshi")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}")
 
     testImplementation(kotlin("kotlin-test"))
     testImplementation(kotlin("test-junit"))
