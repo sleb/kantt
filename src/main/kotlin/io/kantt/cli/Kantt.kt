@@ -8,9 +8,14 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
 import java.nio.file.Path
 
-class Kantt(private val configService: OptionsService, config: Config, resource: Resource) : CliktCommand() {
+class Kantt(
+    private val configService: OptionsService,
+    config: Config,
+    resource: Resource,
+    task: Task
+) : CliktCommand() {
     init {
-        subcommands(config, resource)
+        subcommands(config, resource, task)
     }
 
     private val options by findOrSetObject { Options() }

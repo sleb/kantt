@@ -16,9 +16,10 @@ class ResourceCreate(private val projectService: ProjectService) :
 
     override fun run() {
         val projectPath = options.projectPath ?: throw PrintMessage("Missing project path")
-        val project = projectService.load(projectPath)
-        project.resources += Resource(alias)
-        projectService.save(projectPath, project)
+        projectService.load(projectPath).also {
+            it.resources += Resource(alias)
+            projectService.save(projectPath, it)
+        }
     }
 }
 

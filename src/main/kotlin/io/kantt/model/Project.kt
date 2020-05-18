@@ -10,11 +10,7 @@ import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 
 @JsonClass(generateAdapter = true)
-data class Project(var resources: Set<Resource> = setOf()) {
-    companion object {
-        fun empty() = Project(resources = setOf())
-    }
-}
+data class Project(var resources: Set<Resource> = setOf(), var tasks: List<Task> = listOf())
 
 interface ProjectService {
     fun load(path: Path): Project
@@ -24,7 +20,7 @@ interface ProjectService {
 class DefaultProjectService(private val jsonAdapter: JsonAdapter<Project>) : ProjectService {
     override fun load(path: Path): Project =
         if (Files.notExists(path)) {
-            Project.empty().also { save(path, it) }
+            Project().also { save(path, it) }
         } else {
             Okio.source(path).use {
                 jsonAdapter.fromJson(Okio.buffer(it)) ?: throw PrintMessage(
