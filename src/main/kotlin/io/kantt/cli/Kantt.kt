@@ -6,10 +6,11 @@ import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
+import io.kantt.model.ModelService
 import java.nio.file.Path
 
 class Kantt(
-    private val configService: OptionsService,
+    private val configService: ModelService<Options>,
     config: Config,
     resource: Resource,
     task: Task

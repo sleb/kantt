@@ -6,10 +6,11 @@ import com.github.ajalt.clikt.core.PrintMessage
 import com.github.ajalt.clikt.core.requireObject
 import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.arguments.argument
-import io.kantt.model.ProjectService
+import io.kantt.model.ModelService
+import io.kantt.model.Project
 import io.kantt.model.Resource
 
-class ResourceCreate(private val projectService: ProjectService) :
+class ResourceCreate(private val projectService: ModelService<Project>) :
     CliktCommand(printHelpOnEmptyArgs = true, name = "create") {
     private val options by requireObject<Options>()
     private val alias by argument()
@@ -23,7 +24,7 @@ class ResourceCreate(private val projectService: ProjectService) :
     }
 }
 
-class ResourceList(private val projectService: ProjectService) : CliktCommand(name = "list") {
+class ResourceList(private val projectService: ModelService<Project>) : CliktCommand(name = "list") {
     private val options by requireObject<Options>()
 
     override fun run() {

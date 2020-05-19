@@ -7,8 +7,9 @@ import com.github.ajalt.clikt.core.requireObject
 import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
+import io.kantt.model.ModelService
 
-class ConfigSet(private val configService: OptionsService) : CliktCommand(name = "set") {
+class ConfigSet(private val configService: ModelService<Options>) : CliktCommand(name = "set") {
     private val options by requireObject<Options>()
     private val projectPath by option().path(canBeDir = false)
 
@@ -24,7 +25,7 @@ class ConfigSet(private val configService: OptionsService) : CliktCommand(name =
     }
 }
 
-class ConfigShow(private val configService: OptionsService) : CliktCommand(name = "show") {
+class ConfigShow(private val configService: ModelService<Options>) : CliktCommand(name = "show") {
     private val options by requireObject<Options>()
 
     override fun run() {
