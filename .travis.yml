@@ -6,3 +6,6 @@ jdk: oraclejdk14
 
 script:
   - ./gradlew test
+
+notifications:
+  slack: lebarons:wQ3fTgOCqD48gEHlEXYtZ476
