@@ -5,4 +5,4 @@ os: linux
 jdk: oraclejdk14
 
 script:
-  - ./gradlew test --scan -s
+  - ./gradlew test
