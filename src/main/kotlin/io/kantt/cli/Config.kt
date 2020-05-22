@@ -9,7 +9,9 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
 import io.kantt.model.ModelService
 
-class ConfigSet(private val configService: ModelService<Options>) : CliktCommand(name = "set") {
+class ConfigSet(private val configService: ModelService<Options>) :
+    CliktCommand(name = "set", help = "Set config option") {
+
     private val options by requireObject<Options>()
     private val projectPath by option().path(canBeDir = false)
 
@@ -25,7 +27,9 @@ class ConfigSet(private val configService: ModelService<Options>) : CliktCommand
     }
 }
 
-class ConfigShow(private val configService: ModelService<Options>) : CliktCommand(name = "show") {
+class ConfigShow(private val configService: ModelService<Options>) :
+    CliktCommand(name = "show", help = "Show currently configured options") {
+
     private val options by requireObject<Options>()
 
     override fun run() {
@@ -36,8 +40,10 @@ class ConfigShow(private val configService: ModelService<Options>) : CliktComman
     }
 }
 
-class Config(configSet: ConfigSet, configShow: ConfigShow) : NoOpCliktCommand() {
+class Config(configSet: ConfigSet, configShow: ConfigShow) : NoOpCliktCommand(help = "Get and set options") {
     init {
         subcommands(configSet, configShow)
     }
+
+    override fun aliases(): Map<String, List<String>> = genAliases()
 }

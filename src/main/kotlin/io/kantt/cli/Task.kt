@@ -12,7 +12,9 @@ import io.kantt.model.Project
 import io.kantt.model.Task
 import java.time.Duration
 
-class TaskList(private val projectService: ModelService<Project>) : CliktCommand(name = "list") {
+class TaskList(private val projectService: ModelService<Project>) :
+    CliktCommand(name = "list", help = "Create project tasks") {
+
     private val options by requireObject<Options>()
 
     override fun run() {
@@ -24,7 +26,9 @@ class TaskList(private val projectService: ModelService<Project>) : CliktCommand
     }
 }
 
-class TaskCreate(private val projectService: ModelService<Project>) : CliktCommand(name = "create") {
+class TaskCreate(private val projectService: ModelService<Project>) :
+    CliktCommand(name = "create", help = "Create project tasks") {
+
     private val options by requireObject<Options>()
     private val description by argument()
     private val effort by argument().convert { Duration.parse(it) }
@@ -39,8 +43,10 @@ class TaskCreate(private val projectService: ModelService<Project>) : CliktComma
     }
 }
 
-class Task(taskList: TaskList, taskCreate: TaskCreate) : NoOpCliktCommand() {
+class Task(taskList: TaskList, taskCreate: TaskCreate) : NoOpCliktCommand(help = "Manage project tasks") {
     init {
         subcommands(taskList, taskCreate)
     }
+
+    override fun aliases(): Map<String, List<String>> = genAliases()
 }

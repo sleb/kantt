@@ -11,7 +11,8 @@ import io.kantt.model.Project
 import io.kantt.model.Resource
 
 class ResourceCreate(private val projectService: ModelService<Project>) :
-    CliktCommand(printHelpOnEmptyArgs = true, name = "create") {
+    CliktCommand(printHelpOnEmptyArgs = true, name = "create", help = "Create project resources") {
+
     private val options by requireObject<Options>()
     private val alias by argument()
 
@@ -24,7 +25,9 @@ class ResourceCreate(private val projectService: ModelService<Project>) :
     }
 }
 
-class ResourceList(private val projectService: ModelService<Project>) : CliktCommand(name = "list") {
+class ResourceList(private val projectService: ModelService<Project>) :
+    CliktCommand(name = "list", help = "List project resources") {
+
     private val options by requireObject<Options>()
 
     override fun run() {
@@ -36,8 +39,10 @@ class ResourceList(private val projectService: ModelService<Project>) : CliktCom
     }
 }
 
-class Resource(create: ResourceCreate, list: ResourceList) : NoOpCliktCommand() {
+class Resource(create: ResourceCreate, list: ResourceList) : NoOpCliktCommand(help = "Manage project resources") {
     init {
         subcommands(create, list)
     }
+
+    override fun aliases(): Map<String, List<String>> = genAliases()
 }

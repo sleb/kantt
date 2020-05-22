@@ -11,10 +11,6 @@ repositories {
     jcenter()
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
 tasks.withType<KotlinCompile>() {
     kotlinOptions {
         jvmTarget = "11"
@@ -30,9 +26,9 @@ dependencies {
 
     kapt("com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}")
 
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:${Versions.kotest}")
     testImplementation("io.kotest:kotest-assertions-core-jvm:${Versions.kotest}")
     testImplementation("com.google.jimfs:jimfs:${Versions.jimfs}")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:${Versions.kotest}")
 
     testRuntimeOnly("io.kotest:kotest-runner-console-jvm:${Versions.kotest}")
 }
@@ -43,6 +39,7 @@ application {
 
 tasks {
     test {
+        useJUnitPlatform()
         testLogging {
             events(FAILED, PASSED, SKIPPED)
         }
